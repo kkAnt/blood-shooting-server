@@ -1,0 +1,4 @@
+hints.txt
+deps/
+ebin/
+*.dump

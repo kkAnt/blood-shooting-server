@@ -1,0 +1,12 @@
+{application, blood_shooting,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { blood_shooting_app, []}},
+  {env, []}
+ ]}.
