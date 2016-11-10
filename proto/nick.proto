@@ -1,0 +1,3 @@
+message Nick { 
+	required string name = 1;
+}

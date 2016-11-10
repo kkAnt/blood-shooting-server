@@ -1,6 +1,6 @@
 -module(blood_shooting_main).
 -export([start/1, stop/1, loop/3, socket/2, player_timer/2, player_talker/2]).
-%-record(person, {name, id, email}).
+-record(nick, {name}).
 -include("p.hrl").
 
 start(Port) ->
@@ -22,13 +22,18 @@ loop(Socket, Players, Map) ->
 					Timer = spawn(?MODULE, player_timer, [self(), {Ip, Port}]),
 					Talker = spawn(?MODULE, player_talker, [Socket, {Ip, Port}]),
 					Talker ! [map, Map],
-					loop(Socket, lists:flatten([{{Ip, Port}, {timer, Timer}, {talker, Talker}} | Players]), Map);
+					Nick = nick:decode_msg(Packet, 'Nick'),
+					Nickname = Nick#nick.name,
+					io:format("New player ~w~n", [Nickname]),
+					loop(Socket, lists:flatten([{{Ip, Port}, {timer, Timer}, {talker, Talker}, {nick, Nickname}} | Players]), Map);
 				{_, Handler} -> 
 					Handler ! ok,
 					loop(Socket, Players, Map)
 			end;
 		{annihilate, Player} ->
-			loop(Socket, lists:keydelete(Player, 1, Players), Map) 
+			loop(Socket, lists:keydelete(Player, 1, Players), Map);
+		sup ->
+			loop(Socket, Players, Map)
 	end.
 
 
@@ -40,7 +45,7 @@ socket(Socket, Loop) ->
 			%ToSend = p:encode_msg(#'Person'{name="abc def", id=345, email="a@example.com"}),
 			%gen_udp:send(Socket, Ip, Port, Message),
 		{error, _} ->
-			io:format("No activity at ~w~n", [Socket]),
+			Loop ! sup,
 			socket(Socket, Loop)
 	end.	
 

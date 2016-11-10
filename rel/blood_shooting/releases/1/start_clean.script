@@ -1,4 +1,4 @@
-%% script generated at {2016,11,2} {15,49,55}
+%% script generated at {2016,11,8} {16,55,41}
 {script,
     {"start_clean",[]},
     [{preLoaded,
@@ -38,7 +38,8 @@
           qlc,qlc_pt,queue,rand,random,re,sets,shell,shell_default,slave,sofs,
           string,supervisor,supervisor_bridge,sys,timer,unicode,win32reg,zip]},
      {path,["$ROOT/lib/blood_shooting-1/ebin"]},
-     {primLoad,[blood_shooting_app,blood_shooting_main,blood_shooting_sup,p]},
+     {primLoad,
+         [blood_shooting_app,blood_shooting_main,blood_shooting_sup,nick,p]},
      {path,["$ROOT/lib/compiler-7.0.2/ebin"]},
      {primLoad,
          [beam_a,beam_asm,beam_block,beam_bool,beam_bs,beam_bsm,beam_clean,
@@ -160,7 +161,7 @@
                    {id,[]},
                    {modules,
                        [blood_shooting_app,blood_shooting_main,
-                        blood_shooting_sup,p]},
+                        blood_shooting_sup,nick,p]},
                    {registered,[]},
                    {applications,[kernel,stdlib]},
                    {included_applications,[]},
